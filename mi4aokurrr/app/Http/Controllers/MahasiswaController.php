@@ -126,9 +126,12 @@ class MahasiswaController extends Controller
         $new_filename = $validasi['npm'] . '.' . $ext;
         $request -> foto -> storeAs('public', $new_filename);
 
-        $mahasiswa -> foto = $new_filename;
-        $mahasiswa -> save();
-        return redirect() -> route ('mahasiswa.index') -> with('success', 'Data berhasil disimpan' . $validasi['nama']);  
+        $validasi['foto']=$new_filename;
+
+        Mahasiswa::where('id',$mahasiswa->id)->update($validasi);
+        
+        return redirect()
+         -> route ('mahasiswa.index') -> with('success', 'Data berhasil disimpan' . $validasi['nama']);  
 
         
     }
